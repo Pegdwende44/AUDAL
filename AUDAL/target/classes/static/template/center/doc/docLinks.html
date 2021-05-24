@@ -1,0 +1,23 @@
+<div id="docLinksGraphChart"   style="width:inherit; height:80%" ng-show="analysis.docLinks.selectedVisu=='Docs-graph' && !analysis.docLinks.isQuerying && !analysis.data.isQuerying"> 
+	<my-graph-chart2 title="analysis.docLinks.chartTitle" data="analysis.docLinks.docGraphChartData"></my-graph-chart2>
+</div>
+
+
+<div id="groupsLinksGraphChart"   style="width:inherit; height:80%" ng-show="analysis.docLinks.selectedVisu=='Groups-graph' && !analysis.docLinks.isQuerying && !analysis.data.isQuerying"> 
+	<my-graph-chart2 title="analysis.docLinks.chartTitle" data="analysis.docLinks.groupGraphChartData"></my-graph-chart2>
+</div>
+
+
+<div id="docLinksWheelChart"  ng-show="analysis.docLinks.selectedVisu =='Groups-wheel' && !analysis.docLinks.isQuerying && !analysis.data.isQuerying"> 
+		<my-wheel-chart title="analysis.docLinks.chartTitle" data="analysis.docLinks.groupWheelChartData">Chart not rendering...</my-wheel-chart>	
+</div>
+
+
+
+
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.docLinks.isQuerying || analysis.data.isQuerying">
+	<div class="spinner-grow chartSpinner" role="status" >
+		<span class="sr-only">Loading...</span>
+	</div>			
+</div>

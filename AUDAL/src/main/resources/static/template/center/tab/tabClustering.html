@@ -1,0 +1,49 @@
+<div id="tabClusteringKmeansTable" ng-show="analysis.tabClustering.selectedVisu == 'Table' && analysis.tabClustering.selectedAnalysis == 'KMeans' && !analysis.tabClustering.isQuerying && !analysis.data.isQuerying">
+	<table ng-table ="analysis.tabClustering.dataTable1" class="table table-condensed table-bordered table-striped" show-filter="true">
+	<thead>
+		<tr>
+			<th>#</th><th ng-repeat="col in analysis.tabClustering.tableData1.columns"  data-title="col">{{col}}</th>
+		</tr>
+	</thead>
+	<tr ng-repeat="row in analysis.tabClustering.tableData1.rows | orderBy:'value'">
+		<td>{{$index+1}}</td><td ng-repeat="col in analysis.tabClustering.tableData1.columns"  data-title="col">{{row[col]}}</td>
+	
+	</tr>
+	</table>
+</div>
+
+<div id="tabClusteringPCATable" ng-show="analysis.tabClustering.selectedVisu == 'Table' && analysis.tabClustering.selectedAnalysis == 'PCA' && !analysis.tabClustering.isQuerying && !analysis.data.isQuerying">
+<table ng-table ="analysis.tabClustering.dataTable2" class="table table-condensed table-bordered table-striped" show-filter="true">
+<thead>
+	<tr>
+		<th>#</th><th ng-repeat="col in analysis.tabClustering.tableData2.columns"  data-title="col">{{col}}</th>
+	</tr>
+</thead>
+<tr ng-repeat="row in analysis.tabClustering.tableData2.rows | orderBy:'value'">
+	<td>{{$index+1}}</td><td ng-repeat="col in analysis.tabClustering.tableData2.columns"  data-title="col">{{row[col]}}</td>
+
+</tr>
+</table>
+</div>
+
+
+<div id="tabClusteringBubbleChart" ng-show="analysis.tabClustering.selectedVisu == 'Bullets' && analysis.tabClustering.selectedAnalysis == 'PCA' && !analysis.tabClustering.isQuerying && !analysis.data.isQuerying"> 
+	<my-bubble-chart title="analysis.tabClustering.bubbleChartTitle" data="analysis.tabClustering.bubbleChartData">Chart not rendering...</my-bubble-chart>
+</div>
+
+
+<div id="tabClusteringGroupsChart" ng-show="analysis.tabClustering.selectedVisu == 'Groups' && analysis.tabClustering.selectedAnalysis == 'KMeans' && !analysis.tabClustering.isQuerying && !analysis.data.isQuerying"> 
+	<my-groups-chart title="analysis.tabClustering.bubbleChartTitle" data="analysis.tabClustering.groupsChartData">Chart not rendering...</my-groups-chart>
+</div>
+
+
+<div id="tabClusteringRadarChart" ng-show="analysis.tabClustering.selectedVisu == 'Radar' && analysis.tabClustering.selectedAnalysis == 'KMeans' && !analysis.tabClustering.isQuerying && !analysis.data.isQuerying"> 
+	<my-radar-chart title="analysis.tabClustering.bubbleChartTitle" data="analysis.tabClustering.radarChartData">Chart not rendering...</my-radar-chart>
+</div>
+
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.tabClustering.isQuerying || analysis.data.isQuerying"">
+	<div class="spinner-grow chartSpinner" role="status" >
+		<span class="sr-only">Loading...</span>
+	</div>			
+</div>

@@ -1,0 +1,129 @@
+<div id="leftExpanded" class="m-0 p-0">
+	<nav class="navbar navbar-expand-md sticky-top navbar-dark py-0"
+		id="leftTitle">
+		<div class="mr-auto my-0">EXPLORATORY TASKS</div>
+		<div class="ml-auto my-0">
+			<a class="btn btn-sm navbar-btn" id="leftSectionReduceBtn"
+				ng-click="reduceL()"> <i class="fas fa-angle-double-left"></i>
+			</a>
+		</div>
+	</nav>
+
+	<div id="leftContent" class="m-0 p-0" >
+	<div id="leftSubSection1" class="leftSubSection">
+		<nav
+			class="navbar navbar-expand-md sticky-top navbar-light py-0 leftSubTitle"
+			id="leftSubTitle1">
+
+			<div class="mr-auto my-0">
+				<i class="fas fa-search px-2"></i>Terms filtering
+			</div>
+			<div class="ml-auto">
+				<a class="btn btn-sm navbar-btn" id="leftSubContent1ReduceBtn" style="display: none;"
+					ng-click="reduceLS('leftSubContent1')"  > <i class="fas fa-minus"></i>
+				</a> <a class="btn btn-sm navbar-btn" id="leftSubContent1ExpandBtn" 
+					ng-click="expandLS('leftSubContent1')">
+					<i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</nav>
+		
+		<div id="leftSubContent1" class="leftSubContent"  ng-include="'template/left/termsForm.html'" >
+		</div>
+	</div>
+
+
+
+
+
+	<div id="leftSubSection2" class="leftSubSection">
+		<nav
+			class="navbar navbar-expand-md sticky-top navbar-light py-0 leftSubTitle"
+			id="leftSubTitle2">
+			<div class="mr-auto my-0">
+				<i class="fas fa-object-ungroup px-2"></i>Groupings
+			</div>
+			<div class="ml-auto">
+				<a class="btn btn-sm navbar-btn" id="leftSubContent2ReduceBtn"  style="display: none;"
+					ng-click="reduceLS('leftSubContent2')" >
+					<i class="fas fa-minus"></i>
+				</a> <a class="btn btn-sm navbar-btn" id="leftSubContent2ExpandBtn"
+					ng-click="expandLS('leftSubContent2')"> <i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</nav>
+		<div id="leftSubContent2" class="leftSubContent"  ng-include="'template/left/groupingsForm.html'" style="display: none;"></div>
+	</div>
+
+	<div id="leftSubSection3" class="leftSubSection">
+		<nav
+			class="navbar navbar-expand-md sticky-top navbar-light py-0 leftSubTitle"
+			id="leftSubTitle3">
+			<div class="mr-auto my-0">
+				<i class="fas fa-table px-2"></i>Tables
+			</div>
+			<div class="ml-auto">
+				<a class="btn btn-sm navbar-btn" id="leftSubContent3ReduceBtn"
+					ng-click="reduceLS('leftSubContent3')" style="display: none;">
+					<i class="fas fa-minus"></i>
+				</a> <a class="btn btn-sm navbar-btn" id="leftSubContent3ExpandBtn"
+					ng-click="expandLS('leftSubContent3')"> <i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</nav>
+		<div id="leftSubContent3" class="leftSubContent"  ng-include="'template/left/tablesForm.html'" style="display: none;"></div>
+	</div>
+
+
+	<!-- >div id="leftSubSection3" class="leftSubSection">
+		<nav class="navbar navbar-expand-md sticky-top navbar-light py-0 leftSubTitle"
+			id="leftSubTitle4">
+			<div class="mr-auto my-0">
+				<i class="fas fa-expand mx-2"></i>Co-clustered
+			</div>
+			<div class="ml-auto">
+				<a class="btn btn-sm navbar-btn" id="leftSubContent4ReduceBtn"
+					ng-click="reduceLS('leftSubContent4')" style="display: none;">
+					<i class="fas fa-minus"></i>
+				</a> <a class="btn btn-sm navbar-btn" id="leftSubContent4ExpandBtn"
+					ng-click="expandLS('leftSubContent4')"> <i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</nav>
+		<div id="leftSubContent4" class="leftSubContent"
+			style="display: none;">dsfsdfdsfds sdff sdfsdf</div>
+	</div>
+
+
+	<div id="leftSubSection5" class="leftSubSection">
+		<nav
+			class="navbar navbar-expand-md sticky-top navbar-light py-0 leftSubTitle"
+			id="leftSubTitle5">
+			<div class="mr-auto my-0">
+				<i class="fas fa-expand mx-2"></i>Similarity links
+			</div>
+			<div class="ml-auto">
+				<a class="btn btn-sm navbar-btn" id="leftSubContent5ReduceBtn"
+					ng-click="reduceLS('leftSubContent5')" style="display: none;">
+					<i class="fas fa-minus"></i>
+				</a> <a class="btn btn-sm navbar-btn" id="leftSubContent5ExpandBtn"
+					ng-click="expandLS('leftSubContent5')"> <i class="fas fa-plus"></i>
+				</a>
+			</div>
+		</nav>
+		<div id="leftSubContent5" class="leftSubContent"
+			style="display: none;">dsfsdfdsfds sdff sdfsdf</div>
+	</div-->
+</div>
+</div>
+
+
+
+
+<div id="leftReduced" class="m-0 p-0" style="display: none">
+	<div class="mr-auto my-0">
+		<a class="btn btn-sm navbar-btn" id="leftSectionExpandBtn"
+			ng-click="expandL()"> <i class="fas fa-search"></i>
+		</a>
+	</div>
+</div>

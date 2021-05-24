@@ -1,0 +1,76 @@
+
+
+<div id="docPropertiesTable" ng-show="analysis.docProperties.selectedVisualisation == 'Table' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying">
+
+<table ng-table ="analysis.docProperties.dataTable" class="table table-condensed table-bordered table-striped" show-filter="true">
+
+<tr ng-repeat="item in analysis.docProperties.tableData | orderBy:'value'">
+<td data-title="'#'">{{$index + 1}}</td>
+<td data-title="analysis.docProperties.tableTitle" >{{item.value}}</td>
+<td data-title="link" ng-show="analysis.docProperties.selectedProperty=='title'">
+	<button type="button" class="btn btn-sm btn-light m-0" 
+			ng-click="analysis.docProperties.showContent(item.identifier, item.value)">
+		<i class="fas fa-eye" aria-hidden="true"></i>
+	</button>
+</td>
+</tr>
+</table>
+</div>
+
+
+<!-- >div id="contentModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{analysis.docProperties.docData}}
+        sdfsdfdsfdssssssssss
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light" ng-click="analysis.docProperties.hideContent()">
+        	<i class="fa fa-times" aria-hidden="true"></i>
+		</button>
+       
+      </div>
+    </div>
+  </div>
+  </div>
+</div-->
+
+
+<div id="docPropertiesBarchart" ng-show="analysis.docProperties.selectedVisualisation == 'Barchart' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying"> 
+<my-bar-chart title="analysis.docProperties.barChartTitle" data="analysis.docProperties.barChartData">Chart not rendering...</my-bar-chart>
+</div>
+
+
+<div id="docPropertiesPolarchart" ng-show="analysis.docProperties.selectedVisualisation == 'Polar' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying"> <!--   -->
+<my-polar-chart title="analysis.docProperties.barChartTitle" data="analysis.docProperties.barChartData">Chart not rendering...</my-polar-chart>
+</div>
+
+
+<div id="docPropertiesPiechart" ng-show="analysis.docProperties.selectedVisualisation == 'Piechart' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying"> <!--   -->
+<my-pie-chart title="analysis.docProperties.pieChartTitle" data="analysis.docProperties.pieChartData">Chart not rendering...</my-pie-chart>
+</div>
+
+
+<div id="docPropertiesBoxplot" ng-show="analysis.docProperties.selectedVisualisation == 'Boxplot' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying"> 
+<my-boxplot-chart title="analysis.docProperties.histogramChartTitle" data="analysis.docProperties.histogramChartData">Chart not rendering...</my-boxplot-chart>
+</div>
+
+
+<div id="docPropertiesTimeline" ng-show="analysis.docProperties.selectedVisualisation == 'Timeline' && !analysis.docProperties.isQuerying && !analysis.data.isQuerying"> <!--   -->
+<my-timeline-chart title="analysis.docProperties.timelineChartTitle" data="analysis.docProperties.timelineChartData">Chart not rendering...</my-timeline-chart>
+</div>
+
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.docProperties.isQuerying || analysis.data.isQuerying"">
+				<div class="spinner-grow chartSpinner" role="status" >
+					<span class="sr-only">Loading...</span>
+				</div>			
+</div>

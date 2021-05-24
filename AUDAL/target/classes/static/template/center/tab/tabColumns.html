@@ -1,0 +1,58 @@
+
+
+<div id="tabColumnsTable1" ng-show="analysis.tabColumns.selectedVisu == 'Table' && analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying">
+	<table ng-table ="analysis.tabColumns.dataTable1" class="table table-condensed table-bordered table-striped" show-filter="true">
+	<tr ng-repeat="item in analysis.tabColumns.tableData1 | orderBy:'value'">
+	<td data-title="'#'">{{$index + 1}}</td>
+	<td data-title="analysis.tabColumns.tableTitle1" >{{item.value}}</td>
+	</tr>
+	</table>
+
+</div>
+
+<div id="tabColumnsBarchart1" ng-show="analysis.tabColumns.selectedVisu == 'BarChart' && analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-bar-chart title="analysis.tabColumns.barChartTitle1" data="analysis.tabColumns.barChartData1">Chart not rendering...</my-bar-chart>
+</div>
+
+<div id="tabColumnsBoxPlot" ng-show="analysis.tabColumns.selectedVisu == 'BoxPlot'  && analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-boxplot-chart title="analysis.tabColumns.boxPlotTitle1" data="analysis.tabColumns.boxPlotData1">Chart not rendering...</my-boxplot-chart>
+</div>
+
+<div id="tabColumnsScatterChart1"   ng-show="analysis.tabColumns.selectedVisu=='Scatter' && analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-scatter-chart title="analysis.tabColumns.scatterChartTitle1" data="analysis.tabColumns.scatterChartData1"></my-scatter-chart>
+</div>
+
+<div id="tabColumnsHistogramChart1"   ng-show="analysis.tabColumns.selectedVisu=='Histogram' && analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-histogram-chart title="analysis.tabColumns.historgamChartTitle1" data="analysis.tabColumns.histogramChartData"></my-histogram-chart>
+</div>
+
+
+<!-- COMPLEX ANALYSES -->
+
+<div id="tabColumnsTable2" ng-show="analysis.tabColumns.selectedVisu == 'Table' && !analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying">
+	<table ng-table ="analysis.tabColumns.dataTable2" class="table table-condensed table-bordered table-striped" show-filter="true">
+	<tr ng-repeat="item in analysis.tabColumns.tableData2 | orderBy:'key'">
+	<td data-title="'#'">{{$index + 1}}</td>
+	<td data-title="analysis.tabColumns.tableTitle2X" >{{item.valueX}}</td>
+		<td data-title="analysis.tabColumns.tableTitle2Y" >{{item.valueY}}</td>
+	</tr>
+	</table>
+</div>
+
+<div id="tabColumnsScatterChart2"   ng-show="analysis.tabColumns.selectedVisu=='Scatter' && !analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-scatter-chart title="analysis.tabColumns.chartTitle2" data="analysis.tabColumns.scatterChartData2"></my-scatter-chart>
+</div>
+
+<div id="tabColumnsHeatMapChart2"   ng-show="analysis.tabColumns.selectedVisu=='HeatMap' && !analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+	<my-heat-map-chart title="analysis.tabColumns.chartTitle2" data="analysis.tabColumns.heatMapData2"></my-heat-map-chart>
+</div>
+
+<div id="tabColumnsBarchart2" ng-show="analysis.tabColumns.selectedVisu == 'BarChart' && !analysis.tabColumns.simpleAnalysis && !analysis.tabColumns.isQuerying && !analysis.data.isQuerying"> 
+<my-bar-chart title="analysis.tabColumns.barChartTitle2" data="analysis.tabColumns.barChartData2">Chart not rendering...</my-bar-chart>
+</div>
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.tabColumns.isQuerying || analysis.data.isQuerying"">
+				<div class="spinner-grow chartSpinner" role="status" >
+					<span class="sr-only">Loading...</span>
+				</div>			
+</div>

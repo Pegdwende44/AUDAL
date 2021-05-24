@@ -1,0 +1,24 @@
+<div id="docHighlightsList" class="p-2" ng-show="!analysis.docHighlights.isQuerying && !analysis.data.isQuerying">
+
+
+<div ng-repeat="doc in analysis.docHighlights.highlights">
+	<div class="docTitle px-2">
+		<a class="btn text-left" ng-click="analysis.docHighlights.hideShowHighlights(doc.identifier)">{{$index+1 +' - '+ doc.title +'['+doc.highlights.length+']'}}</a>
+	</div>
+	<ul id="list-highlights-{{doc.identifier}}" class="list-highlights list-group list-group-flush" style="display:none;">
+		<li class="list-group-item py-1" ng-repeat="fragment in doc.highlights track by $index">
+			<p class=my-1" ng-bind-html="fragment | safeHtml"></p>
+		</li>
+	</ul>
+</div>
+
+
+</div>
+
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.docHighlights.isQuerying || analysis.data.isQuerying"">
+				<div class="spinner-grow chartSpinner" role="status" >
+					<span class="sr-only">Loading...</span>
+				</div>			
+</div>
+

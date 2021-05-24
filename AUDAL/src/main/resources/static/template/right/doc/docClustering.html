@@ -1,0 +1,147 @@
+<div id="docAnalysisItem7Title"
+	class="docAnalysisItemTitle m-0 d-flex ">
+	<div class="mr-auto">
+		<a class="btn btn-sm"
+			ng-click="setActiveDocAnalysis('docClustering','docAnalysisItem7Title' )"> 
+			<i class="fas fa-th-large mr-2"></i>Clustering
+		</a>
+	</div>
+	<div class="ml-auto mr-2">
+		<i id="docAnalysisItem7ChoiceIcon"
+			class="fas fa-star docAnalysisItemChoiceIcon"  ng-show="analysis.activeDocAnalysis == 'docClustering'"></i>
+
+	</div>
+</div>
+
+<div id="docAnalysisItem7Content" class="docAnalysisItemContent"  ng-show="analysis.activeDocAnalysis == 'docClustering'">
+
+	<form ng-controller="docClusteringController"
+		ng-submit="analysis.generalQuery()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+
+	<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Representation</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docClustering.selectedRepresentation" 
+							ng-options="item.vocabulary +'-'+ item.format for item in analysis.data.embeddingRepresentations">
+							<!--  -->option ng-repeat="item in analysis.docClustering.availableRepresentations">{{item.vocabulary +'-'+ item.format }}</option-->
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+
+		<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Analysis</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docClustering.selectedAnalysis"
+							
+							ng-change="analysis.docClustering.updateVisu();analysis.generalQuery()">
+							<option ng-repeat="item in analysis.docClustering.availableAnalysis">{{item}}</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.docClustering.selectedAnalysis == 'KMeans'">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">KMeans Nb-Classes</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<input type="number" min="2" max="10" class="form-control-range" id="formControlRange" required="true" 
+						ng-model="analysis.docClustering.kMeansNbClass" ng-init="analysis.docClustering.kMeansNbClass = 3">
+					</div>
+				</div>
+
+			</div>
+			
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Group</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" 
+							ng-model="analysis.docClustering.selectedLabel" 
+							ng-options="option.groupingName for option in groupings.listGroupings | orderBy:'groupingName'" >
+						</select>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualization</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docClustering.selectedVisu"
+							ng-change="analysis.generalQuery()">
+							<option ng-repeat="item in analysis.docClustering.availableVisu">{{item}}</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			
+			
+
+			<div class="container d-flex justify-content-around mb-2">	
+				<input type="submit" class="btn btn-secondary submitBtn" value="Go"></input>
+			</div>
+			
+			 
+			
+		</fieldset>
+	</form>
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+			
+			<div class="alert alert-warning" role="alert" ng-show="analysis.docClustering.errorMessage">
+  				{{analysis.docClustering.errorMessage}}
+			</div>
+			
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.docClustering.isQuerying || analysis.data.isQuerying && !analysis.docClustering.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.docClustering.isQuerying && !analysis.data.isQuerying && !analysis.docClustering.errorMessage">
+	
+				<tbody>
+					<tr ng-repeat="result in analysis.docClustering.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

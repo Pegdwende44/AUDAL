@@ -1,0 +1,228 @@
+<div id="tabAnalysisItem4Title"
+	class="tabAnalysisItemTitle m-0 d-flex ">
+	<div class="mr-auto">
+		<a class="btn btn-sm"
+			ng-click="setActiveTabAnalysis('tabQueries','tabAnalysisItem4Title' )"> 
+			<i class="fas fa-question-circle mr-2"></i>SQL Querying
+		</a>
+	</div>
+	<div class="ml-auto mr-2">
+		<i id="tabAnalysisItem4ChoiceIcon"
+			class="fas fa-star tabAnalysisItemChoiceIcon"  ng-show="analysis.activeTabAnalysis == 'tabQueries'"></i>
+
+	</div>
+</div>
+
+<div id="tabAnalysisItem4Content" class="tabAnalysisItemContent"  ng-show="analysis.activeTabAnalysis == 'tabQueries'">
+
+	<form ng-controller="tabQueriesController"
+		ng-submit="analysis.tabQueries.query()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville2">Query type</label>
+				</div>
+				<div class="col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="queriesSimpleQuerying" type="button"
+							class="queries-queryType btn btn-sm btn-secondary active"
+							ng-click="analysis.tabQueries.activateSimpleQuerying()">Simple</button>
+						<button id="queriesAggregationQuerying" type="button"
+							class="queries-queryType btn btn-sm btn-secondary"
+							ng-click="analysis.tabQueries.deactivateSimpleQuerying()">Custom</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabQueries.simpleQuerying">				
+				<div class="col-lg-5 m-0 p-0">
+					<div><label for="mainTable">Main table</label></div>
+					
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedMainTable" 
+							ng-options="option.title for option in tables.selectedTables"
+							ng-change="analysis.tabQueries.updateJoinTypes()">
+						</select>
+					</div>
+					<div id="mainTableColumnsContent"   ng-show="analysis.tabQueries.selectedMainTable">
+						<div class="custom-control custom-checkbox ml-1 " ng-repeat="column in analysis.tabQueries.mainTableColumns">
+				              <input type="checkbox" class="custom-control-input" id="mainColumns{{column.name}}" 
+				              ng-model="analysis.tabQueries.selectedMainTableColumns[analysis.tabQueries.selectedMainTable.title + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="mainColumns{{column.name}}" data-toggle="tooltip" 
+				              		data-placement="left" title="{{column.name +' - '+ column.type}}">{{column.name}}</label>
+				              
+			            </div>
+		            </div>
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabQueries.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="joinType">Join type</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedJoinType"
+							ng-init="analysis.tabQueries.selectedJoinType = analysis.tabQueries.joinTypes[0]"
+							ng-options="option.value for option in analysis.tabQueries.joinTypes"
+							ng-change="analysis.tabQueries.updateJoinableTables()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabQueries.selectedJoinType.key != 'NONE' && analysis.tabQueries.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0 d-flex" >
+					<div>
+						<label for="joinTable">Join Table</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedJoinTable" 
+							ng-options="option.tableName for option in analysis.tabQueries.joinableTables"
+							ng-change="analysis.tabQueries.updateJoinTableColumns()">
+						</select>
+					</div>
+					<div id="joinTableColumnsContent" ng-show="analysis.tabQueries.selectedJoinTable" >
+						<div class="custom-control custom-checkbox ml-1" ng-repeat="column in analysis.tabQueries.joinTableColumns">
+				              <input type="checkbox" class="custom-control-input" id="joinColumns{{column.name}}" 
+				              		ng-model="analysis.tabQueries.selectedJoinTableColumns[analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="joinColumns{{column.name}}" 
+				              		data-toggle="tooltip" data-placement="left" title="{{column.name +' - '+ column.type}}">{{column.name}}</label>
+				              
+			            </div>
+		            </div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabQueries.simpleQuerying && analysis.tabQueries.activeAgg">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Group-by</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedGroupField" ng-change="analysis.tabQueries.updateGrouping()">
+							
+							<option ng-repeat="column in analysis.tabQueries.mainTableColumns" ng-if="column.type=='STRING'">{{analysis.tabQueries.selectedMainTable.title + '.' + column.name}}</option>
+							<option ng-repeat="column in analysis.tabQueries.joinTableColumns" ng-if="column.type=='STRING'">{{analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name}}</option>
+							
+						</select>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabQueries.selectedGroupField && analysis.tabQueries.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<div>
+						<label for="ville3">Aggregation</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0" >
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedAggOperation">
+							<option>SUM</option>
+							<option>AVG</option>
+							<option>MIN</option>
+							<option>MAX</option>
+							<option>COUNT</option>
+						</select>
+					</div>
+					<div ng-show="analysis.tabQueries.selectedAggOperation">
+						<div class="custom-control custom-checkbox" ng-repeat="column in analysis.tabQueries.mainTableColumns" ng-if="column.type!='STRING'">
+				              <input type="checkbox" class="custom-control-input" id="aggColumns{{analysis.tabQueries.selectedMainTable.title + '.' + column.name}}" 
+				              ng-model="analysis.tabQueries.selectedAggColumns[analysis.tabQueries.selectedMainTable.title + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="aggColumns{{analysis.tabQueries.selectedMainTable.title + '.' + column.name}}">{{analysis.tabQueries.selectedMainTable.title + '.' + column.name}}</label>              
+			            </div>
+			            <div class="custom-control custom-checkbox" ng-repeat="column in analysis.tabQueries.joinTableColumns" ng-if="column.type!='STRING'">
+				              <input type="checkbox" class="custom-control-input" id="aggColumns{{analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name}}" 
+				              ng-model="analysis.tabQueries.selectedAggColumns[analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="aggColumns{{analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name}}">{{analysis.tabQueries.selectedJoinTable.tableName + '.' + column.name}}</label>          
+			            </div>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0" ng-show="!analysis.tabQueries.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<div>
+						<label for="ville3">SQL query</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<textarea  class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.customQuery">
+						</textarea>
+					</div>
+				</div>
+			</div>
+			
+
+
+			<div class="row m-1 p-0 " >
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualisation</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabQueries.selectedVisu"
+							ng-change="analysis.tabQueries.query()"
+							ng-options="option for option in analysis.tabQueries.availableVisu">
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="container d-flex justify-content-around mx-2">	
+		<input type="submit" class="btn btn-secondary submitBtn"
+			 value="Go"></input>
+			
+		</fieldset>
+	</form>
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+			
+			<div class="alert alert-warning" role="alert" ng-show="analysis.tabQueries.errorMessage">
+  				{{analysis.tabQueries.errorMessage}}
+			</div>
+			
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.tabQueries.isQuerying || analysis.data.isQuerying && !analysis.tabQueries.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.tabQueries.isQuerying && !analysis.data.isQuerying && !analysis.tabQueries.errorMessage">
+	
+				<tbody>
+					<tr ng-repeat="result in analysis.tabQueries.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

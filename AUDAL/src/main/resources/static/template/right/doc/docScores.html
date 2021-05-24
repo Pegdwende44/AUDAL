@@ -1,0 +1,125 @@
+<div id="docAnalysisItem4Title" class="docAnalysisItemTitle m-0 d-flex">
+		<div class="mr-auto">
+			<a class="btn btn-sm" ng-click="setActiveDocAnalysis('docScores','docAnalysisItem4Title' )">
+				<i class="fas fa-sort-numeric-down-alt mr-2"></i>Scoring</a>
+			</div>
+		<div class="ml-auto mr-2">
+			<i id="docAnalysisItem4ChoiceIcon" class="fas fa-star docAnalysisItemChoiceIcon" ng-show="analysis.activeDocAnalysis == 'docScores'"></i>
+		</div>
+	</div>
+	
+<div id="docAnalysisItem4Content" class="docAnalysisItemContent"  ng-show="analysis.activeDocAnalysis == 'docScores'">
+<form ng-controller="docScoresController"
+		ng-submit="analysis.generalQuery()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Grouping</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docScores.selectedGrouping = groupings.listGroupings[0]"
+							ng-model="analysis.docScores.selectedGrouping" ng-options="option.groupingName for option in groupings.listGroupings"
+							ng-change="analysis.generalQuery()">
+							
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualization</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docScores.selectedVisu = analysis.docScores.visu[0]"
+							ng-model="analysis.docScores.selectedVisu" 
+							ng-options="option for option in analysis.docScores.visu" ng-change="analysis.generalQuery()">
+						</select>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Filtering</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docScores.filter = analysis.docScores.filterOptions[0]"
+							ng-model="analysis.docScores.filter" 
+							ng-options="option.name for option in analysis.docScores.filterOptions" ng-change="analysis.generalQuery()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Ordering</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docScores.order = analysis.docScores.orderOptions[0]"
+							ng-model="analysis.docScores.order" 
+							ng-options="option.name for option in analysis.docScores.orderOptions" ng-change="analysis.generalQuery()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!--  >div class="container d-flex justify-content-around mb-2">	
+		<input type="submit" class="btn btn-secondary submitBtn"
+			 value="Go"></input>
+			</div-->
+		</fieldset>
+	</form>
+	
+	
+	
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+
+			<div class="alert alert-warning" role="alert" ng-show="analysis.docScores.errorMessage">
+  				{{analysis.docScores.errorMessage}}
+			</div>
+			
+
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.docScores.isQuerying || analysis.data.isQuerying && !analysis.docScores.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.docScores.isQuerying && !analysis.data.isQuerying && !analysis.docScores.errorMessage">
+
+				<tbody>
+
+					<tr ng-repeat="result in analysis.docScores.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>
+</div>
+
+
+

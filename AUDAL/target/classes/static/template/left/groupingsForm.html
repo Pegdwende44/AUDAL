@@ -1,0 +1,85 @@
+<form ng-controller="groupingsController" ng-submit="analysis.generalQuery()">
+	<!-- fieldset class="m-1 p-1">
+		<legend>Parameters</legend>
+		<div class="container">
+			<div class="row mb-2">
+				<div class="col-lg-4 m-0 p-0">
+					<label for="ville2">Matching type</label>
+				</div>
+				<div class="col-lg-8 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="matchingSelected" type="button"
+							class="groupings-matchingType btn btn-sm btn-secondary active"
+							ng-click="groupings.matchingSelected()">Selected</button>
+						<button id="matchingUnselected" type="button"
+							class="groupings-matchingType btn btn-sm btn-secondary"
+							ng-click="groupings.matchingUnselected()">Unselected</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset-->
+	<fieldset class="m-1 p-1">
+		<legend>Groups</legend>
+		<div class="container m-0 p-0">
+		
+		
+		
+		
+
+
+		<div class="grouping-item  pl-2" ng-repeat="grouping in groupings.listGroupings | orderBy:'groupingName'">
+	
+				<a class="btn btn-sm m-0 p-0" ng-dblclick="groupings.checkUncheckAll(grouping.groupingName)"
+				 ng-click="groupings.reduceExpandGrouping(grouping.groupingName)" >
+				<div class="grouping-head m-0 pl-2">
+					
+					<i class="fas fa-caret-right" id="{{grouping.groupingName+'GroupingShowIcon'}}" ></i>
+					<i class="fas fa-caret-down" id="{{grouping.groupingName+'GroupingHideIcon'}}"  style="display:none;"></i>
+				{{$index + 1}}- {{grouping.groupingName}}  
+				</div>
+				</a>
+				
+				<div class="container-flex list-group-items" id="{{grouping.groupingName+'GroupingItems'}}"  style="display:none;">
+					<div class="custom-control custom-checkbox group-item">
+						<input type="checkbox" class="custom-control-input"
+							id="checkAll{{grouping.groupingName}}"  checked="true" ng-model="groupings.checkedGroupings[grouping.groupingName]"
+							ng-change="groupings.checkUncheckGrouping(grouping.groupingName)"> 
+							<label class="custom-control-label"
+							for="checkAll{{grouping.groupingName}}">ALL
+							<!-- span class="ml-auto count">[{{group.count}}]</span--> 
+							</label>
+							
+					</div>	
+						
+					<div class="custom-control custom-checkbox group-item"  ng-repeat="group in grouping.groups | orderBy:'groupName'">
+						<input type="checkbox" class="custom-control-input"
+							id="{{grouping.groupingName  + group.groupName}}" ng-model="groupings.checkedGroups[grouping.groupingName][group.groupName]" 
+							checked="true" ng-change="groupings.unknowCheckGrouping(grouping.groupingName)"> 
+							<label class="custom-control-label"
+							for="{{grouping.groupingName  + group.groupName}}">{{group.groupName}}
+							<span class="ml-auto count">[{{group.count}}]</span> 
+							</label>
+							
+					</div>
+					
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+	</fieldset>
+	<div class="container d-flex justify-content-around mb-2">
+
+		<input type="submit" class="btn btn-secondary submitBtn" value="Query"></input>
+
+		<input type="reset" class="btn btn-secondary submitBtn"
+			ng-click="groupings.reset()" value="Reset"></input>
+
+	</div>
+
+</form>

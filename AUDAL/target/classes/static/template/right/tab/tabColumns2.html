@@ -1,0 +1,154 @@
+<div id="tabAnalysisItem2Title"
+	class="tabAnalysisItemTitle m-0 d-flex ">
+	<div class="mr-auto">
+		<a class="btn btn-sm"
+			ng-click="setActiveTabAnalysis('tabColumns','tabAnalysisItem2Title' )"> 
+			<i class="fas fa-columns mr-2"></i>Columns analysis
+		</a>
+	</div>
+	<div class="ml-auto mr-2">
+		<i id="tabAnalysisItem2ChoiceIcon"
+			class="fas fa-star tabAnalysisItemChoiceIcon"  ng-show="analysis.activeTabAnalysis == 'tabColumns'"></i>
+
+	</div>
+</div>
+
+<div id="tabAnalysisItem2Content" class="tabAnalysisItemContent"  ng-show="analysis.activeTabAnalysis == 'tabColumns'">
+
+	<form ng-controller="tabColumnsController"
+		ng-submit="analysis.tabColumns.query()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville2">Analysis</label>
+				</div>
+				<div class="col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="columnsSimpleAnalysis" type="button"
+							class="columns-analysisType btn btn-sm btn-secondary active"
+							ng-click="analysis.tabColumns.activateSimpleAnalysis()">Simple</button>
+						<button id="columnsCorrelationAnalysis" type="button"
+							class="columns-analysisType btn btn-sm btn-secondary"
+							ng-click="analysis.tabColumns.deactivateSimpleAnalysis()">Correlation</button>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Table</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabColumns.selectedTable" ng-init="analysis.tabColumns.selectedTable = tables.selectedTables[0]"
+							ng-options="option.title for option in tables.selectedTables"
+							ng-change="analysis.tabColumns.updateColumns()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row m-1 p-0" ng-if="analysis.tabColumns.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Column</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" 
+							ng-model="analysis.tabColumns.selectedProperty" 
+							ng-options="option.name for option in analysis.tabColumns.availableColumns"
+							ng-change="analysis.tabColumns.updateVisu()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-if="!analysis.tabColumns.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Column 1</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabColumns.selectedProperty1" 
+							ng-options="option.name for option in analysis.tabColumns.availableColumns"
+							ng-change="analysis.tabColumns.updateVisu()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-if="!analysis.tabColumns.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Column 2</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabColumns.selectedProperty2" 
+							ng-options="option.name for option in analysis.tabColumns.availableColumns"
+							ng-change="analysis.tabColumns.updateVisu()">
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualisation</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabColumns.selectedVisu"
+							ng-change="analysis.tabColumns.query()" 
+							ng-options="option for option in analysis.tabColumns.availableVisu">
+							
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- div class="container d-flex justify-content-around mb-2">	
+		<input type="submit" class="btn btn-secondary submitBtn"
+			 value="Go"></input-->
+			
+		</fieldset>
+	</form>
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+			
+			<div class="alert alert-warning" role="alert" ng-show="analysis.tabColumns.errorMessage">
+  				{{analysis.tabColumns.errorMessage}}
+			</div>
+			
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.tabColumns.isQuerying || analysis.data.isQuerying && !analysis.tabColumns.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.tabColumns.isQuerying && !analysis.data.isQuerying && !analysis.tabColumns.errorMessage">
+	
+				<tbody>
+					<tr ng-repeat="result in analysis.tabColumns.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

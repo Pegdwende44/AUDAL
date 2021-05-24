@@ -1,0 +1,285 @@
+<div id="tabAnalysisItem3Title"
+	class="tabAnalysisItemTitle m-0 d-flex ">
+	<div class="mr-auto">
+		<a class="btn btn-sm"
+			ng-click="setActiveTabAnalysis('tabClustering','tabAnalysisItem3Title' )"> 
+			<i class="fas fa-th-large mr-2"></i>Clustering
+		</a>
+	</div>
+	<div class="ml-auto mr-2">
+		<i id="tabAnalysisItem3ChoiceIcon"
+			class="fas fa-star tabAnalysisItemChoiceIcon"  ng-show="analysis.activeTabAnalysis == 'tabClustering'"></i>
+
+	</div>
+</div>
+
+<div id="tabAnalysisItem3Content" class="tabAnalysisItemContent"  ng-show="analysis.activeTabAnalysis == 'tabClustering'">
+
+	<form ng-controller="tabClusteringController"
+		ng-submit="analysis.tabClustering.query()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville2">Query type</label>
+				</div>
+				<div class="col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="clusteringSimpleQuerying" type="button"
+							class="clustering-queryType btn btn-sm btn-secondary active"
+							ng-click="analysis.tabClustering.activateSimpleQuerying()">Simple</button>
+						<button id="clusteringCustomQuerying" type="button"
+							class="clustering-queryType btn btn-sm btn-secondary"
+							ng-click="analysis.tabClustering.deactivateSimpleQuerying()">Custom</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="!analysis.tabClustering.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<div>
+						<label for="ville3">SQL query</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<textarea  class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.customQuery">
+						</textarea>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.simpleQuerying">				
+				<div class="col-lg-5 m-0 p-0">
+					<div><label for="mainTable">Main table</label></div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedMainTable" ng-init="analysis.tabClustering.selectedMainTable = tables.selectedTables[0]"
+							ng-options="option.title for option in tables.selectedTables"
+							ng-change="analysis.tabClustering.updateJoinTypes()">
+						</select>
+					</div>
+					<div id="mainTableColumnsContent"   ng-show="analysis.tabClustering.selectedMainTable">
+						<div class="custom-control custom-checkbox ml-1 " ng-repeat="column in analysis.tabClustering.mainTableColumns">
+				              <input type="checkbox" class="custom-control-input" id="mainColumns{{column.name}}2" 
+				              ng-model="analysis.tabClustering.selectedMainTableColumns[analysis.tabClustering.selectedMainTable.title + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="mainColumns{{column.name}}2" data-toggle="tooltip" 
+				              		data-placement="left" title="{{column.name +' - '+ column.type}}">{{column.name}}</label>
+				              
+			            </div>
+		            </div>
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="joinType">Join type</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedJoinType"
+							ng-init="analysis.tabClustering.selectedJoinType = analysis.tabClustering.joinTypes[0]"
+							ng-options="option.value for option in analysis.tabClustering.joinTypes"
+							ng-change="analysis.tabClustering.updateJoinableTables()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.selectedJoinType.key != 'NONE' && analysis.tabClustering.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0 d-flex" >
+					<div>
+						<label for="joinTable">Join Table</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedJoinTable" 
+							ng-options="option.tableName for option in analysis.tabClustering.joinableTables"
+							ng-change="analysis.tabClustering.updateJoinTableColumns()">
+						</select>
+					</div>
+					<div id="joinTableColumnsContent" ng-show="analysis.tabClustering.selectedJoinTable" >
+						<div class="custom-control custom-checkbox ml-1" ng-repeat="column in analysis.tabClustering.joinTableColumns">
+				              <input type="checkbox" class="custom-control-input" id="joinColumns{{column.name}}2" 
+				              		ng-model="analysis.tabClustering.selectedJoinTableColumns[analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="joinColumns{{column.name}}2" 
+				              		data-toggle="tooltip" data-placement="left" title="{{column.name +' - '+ column.type}}">{{column.name}}</label>
+				              
+			            </div>
+		            </div>
+				</div>
+			</div>
+			
+			
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.activeAgg && analysis.tabClustering.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Group-by</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedGroupField">
+							<option ng-repeat="column in analysis.tabClustering.mainTableColumns" ng-if="column.type=='STRING'">{{analysis.tabClustering.selectedMainTable.title + '.' + column.name}}</option>
+							<option ng-repeat="column in analysis.tabClustering.joinTableColumns" ng-if="column.type=='STRING'">{{analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name}}</option>
+							
+						</select>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.selectedGroupField && analysis.tabClustering.simpleQuerying">
+				<div class="col-lg-5 m-0 p-0">
+					<div>
+						<label for="ville3">Aggregation</label>
+					</div>
+				</div>
+				<div class="container col-lg-7 m-0 p-0" >
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedAggOperation">
+							<option>SUM</option>
+							<option>AVG</option>
+							<option>MIN</option>
+							<option>MAX</option>
+							<option>COUNT</option>
+						</select>
+					</div>
+					<div ng-show="analysis.tabClustering.selectedAggOperation">
+						<div class="custom-control custom-checkbox" ng-repeat="column in analysis.tabClustering.mainTableColumns" ng-if="column.type!='STRING'">
+				              <input type="checkbox" class="custom-control-input" id="aggColumns{{analysis.tabClustering.selectedMainTable.title + '.' + column.name}}" 
+				              ng-model="analysis.tabClustering.selectedAggColumns[analysis.tabClustering.selectedMainTable.title + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="aggColumns{{analysis.tabClustering.selectedMainTable.title + '.' + column.name}}">{{analysis.tabClustering.selectedMainTable.title + '.' + column.name}}</label>              
+			            </div>
+			            <div class="custom-control custom-checkbox" ng-repeat="column in analysis.tabClustering.joinTableColumns" ng-if="column.type!='STRING'">
+				              <input type="checkbox" class="custom-control-input" id="aggColumns{{analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name}}" 
+				              ng-model="analysis.tabClustering.selectedAggColumns[analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name]" checked>
+				              <label class="custom-control-label" for="aggColumns{{analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name}}">{{analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name}}</label>          
+			            </div>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Analysis</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedAnalysis"
+							ng-change="analysis.tabClustering.updateVisu()">
+							<option ng-repeat="item in analysis.tabClustering.availableAnalysis">{{item}}</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.selectedAnalysis == 'KMeans'">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">KMeans Nb-Classes</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<input type="number" min="2" max="10" class="form-control-range" id="formControlRange" required="true" 
+					ng-model="analysis.tabClustering.kMeansNbClass" ng-init="analysis.tabClustering.kMeansNbClass = 3">
+					</div>
+				</div>
+
+			</div>
+			
+			
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualization</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedVisu"
+							ng-change="analysis.tabClustering.query()">
+							<option ng-repeat="item in analysis.tabClustering.availableVisu">{{item}}</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="row m-1 p-0" ng-show="analysis.tabClustering.selectedVisu == 'Bullets' || analysis.tabClustering.selectedVisu == 'Groups'">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Label</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.tabClustering.selectedVisuLabel">
+							<option ng-repeat="column in analysis.tabClustering.mainTableColumns" ng-if="column.type=='STRING'" value="{{column.name}}">{{analysis.tabClustering.selectedMainTable.title + '.' + column.name}}</option>
+							<option ng-repeat="column in analysis.tabClustering.joinTableColumns" ng-if="column.type=='STRING'" value="{{column.name}}">{{analysis.tabClustering.selectedJoinTable.tableName + '.' + column.name}}</option>
+							
+						</select>
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="container d-flex justify-content-around mb-2">	
+				<input type="submit" class="btn btn-secondary submitBtn" ng-disabled="!analysis.tabClustering.activeAnalysis"
+					 value="Go"></input>
+			</div>
+			
+			 
+			
+		</fieldset>
+	</form>
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+			
+			<div class="alert alert-warning" role="alert" ng-show="analysis.tabClustering.errorMessage">
+  				{{analysis.tabClustering.errorMessage}}
+			</div>
+			
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.tabClustering.isQuerying || analysis.data.isQuerying && !analysis.tabClustering.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.tabClustering.isQuerying && !analysis.data.isQuerying && !analysis.tabClustering.errorMessage">
+	
+				<tbody>
+					<tr ng-repeat="result in analysis.tabClustering.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

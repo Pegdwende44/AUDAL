@@ -1,0 +1,53 @@
+<div class="container" >
+
+	<div class="row justify-content-md-center">
+
+			<div class="cardcard-block d-flex flex-row" style=" position: absolute;
+  top: 30%;">
+				<form class="form-signin" ng-submit="loginUser()" name="loginForm">
+					<!-- >div class="text-center mb-4">
+					<img class="mb-4" src="css/fontawesome/svgs/regular/chart-bar.svg"
+							alt="" width="50" height="50">
+					<h1 class="h3 mb-3 font-weight-normal">AUDAL Analysis Interface</h1>
+						
+						
+						
+					</div-->
+
+					<div class="form-label-group">
+						<input type="text" id="inputEmail" class="form-control"
+							placeholder="Login" required="true" ng-model="credentials.username"> 
+							<label	for="inputEmail" >Login</label>
+					</div>
+
+					<div class="form-label-group">
+						<input type="password" id="inputPassword" class="form-control"
+							placeholder="Password" required="true" ng-model="credentials.password"> 
+							<label	for="inputPassword">Password</label>
+					</div>
+
+					<div class="checkbox mb-3">
+						<label> <input type="checkbox" value="remember-me">
+							Remember me
+						</label>
+					</div>
+					<input type="submit" value="Sign in" class="btn btn-lg btn-primary btn-block">
+					
+				</form>
+			</div>
+				
+	</div>
+<div  style="height:5vh;">
+<div class="alert alert-danger alert-dismissible fade show " role="alert" ng-show="error">
+  <strong>Login error...</strong> Your login/password does not match. Please, try again!
+</div>
+<div class="alert alert-danger alert-dismissible fade show " role="alert" ng-show="rootErrorMessage">
+  <strong>Application error!</strong> {{restartMessage}}
+</div>
+</div>
+
+
+
+
+</div>
+<link rel="stylesheet" href="css/login.css">

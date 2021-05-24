@@ -1,0 +1,96 @@
+<div id="docAnalysisItem1Title"
+	class="docAnalysisItemTitle m-0 d-flex active">
+	<div class="mr-auto">
+		<a class="btn btn-sm"
+			ng-click="setActiveDocAnalysis('docProperties','docAnalysisItem1Title' )"> <i
+			class="fas fa-info-circle  mr-2"></i>Document properties
+		</a>
+	</div>
+	<div class="ml-auto mr-2">
+		<i id="docAnalysisItem1ChoiceIcon"
+			class="fas fa-star docAnalysisItemChoiceIcon"  ng-show="analysis.activeDocAnalysis == 'docProperties'"></i>
+
+	</div>
+</div>
+
+<div id="docAnalysisItem1Content" class="docAnalysisItemContent"  ng-show="analysis.activeDocAnalysis == 'docProperties'">
+
+	<form ng-controller="docPropertiesController"
+		ng-submit="analysis.docProperties.query()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Properties</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docProperties.selectedProperty"
+							ng-change="analysis.docProperties.updateActiveVisualisations()">
+							<option value="{{propItem.name}}"
+								ng-repeat="propItem in analysis.docProperties.properties | orderBy:'name'">{{propItem.name}}
+								[{{propItem.type}}]</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row m-1 p-0">
+
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualisation</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docProperties.selectedVisualisation"
+							ng-change="analysis.docProperties.query()">
+							<option
+								ng-repeat="visu in analysis.docProperties.activeVisualisations">{{visu}}</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- div class="container d-flex justify-content-around mb-2">	
+		<input type="submit" class="btn btn-secondary submitBtn"
+			 value="Go"></input>
+			</div-->
+		</fieldset>
+	</form>
+	<div>
+
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+
+			<div class="alert alert-warning" role="alert" ng-show="analysis.docProperties.errorMessage">
+  				{{analysis.docProperties.errorMessage}}
+			</div>
+
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.docProperties.isQuerying || analysis.data.isQuerying && !analysis.docProperties.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.docProperties.isQuerying && !analysis.data.isQuerying && !analysis.docProperties.errorMessage">
+
+				<tbody>
+
+					<tr ng-repeat="result in analysis.docProperties.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

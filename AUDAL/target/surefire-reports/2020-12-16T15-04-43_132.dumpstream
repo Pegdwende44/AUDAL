@@ -1,0 +1,15 @@
+# Created at 2020-12-16T15:04:59.236
+WARNING: An illegal reflective access operation has occurred
+
+# Created at 2020-12-16T15:04:59.237
+WARNING: Illegal reflective access by org.apache.spark.unsafe.Platform (file:/home/ubuntu/.m2/repository/org/apache/spark/spark-unsafe_2.12/2.4.4/spark-unsafe_2.12-2.4.4.jar) to method java.nio.Bits.unaligned()
+
+# Created at 2020-12-16T15:04:59.239
+WARNING: Please consider reporting this to the maintainers of org.apache.spark.unsafe.Platform
+
+# Created at 2020-12-16T15:04:59.239
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+
+# Created at 2020-12-16T15:04:59.240
+WARNING: All illegal access operations will be denied in a future release
+

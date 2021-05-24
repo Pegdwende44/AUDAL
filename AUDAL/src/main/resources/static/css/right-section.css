@@ -1,0 +1,129 @@
+
+
+
+
+/**************************************************************/
+/*********************** RIGHT ******************************/
+/**************************************************************/
+
+
+#rightSection {
+	background-color:#fcfcfc;
+	height:100%;
+	
+} 
+
+#rightSection #rightTitle{
+	font-size:1.2rem;
+	font-weight:400;
+	border-bottom: solid #ddd 1px;
+	background-color:#5f5f5f;
+	height:35px;
+	color:#fff;
+}  
+
+.rightDefault{
+	width:20%;
+}
+
+.rightMin{
+	width:2.5%;
+}
+
+#rightContent{
+overflow-y:auto; 
+	overflow-x:hidden;
+	height:80vh;
+}
+
+
+.docAnalysisItems{
+	
+}
+
+.docAnalysisItemTitle, .tabAnalysisItemTitle{
+	/*border-left: 1px inset #fff;
+	border-right: 1px groove #fff;*/
+	 border-top: outset #fff 1.5px;
+	 border-bottom: outset #fff 1.5px;
+	 background-color:#e0e5f6;
+	 line-height:30px; 
+	 font-size:1.2rem;
+}
+
+.docAnalysisItemTitle.active, .tabAnalysisItemTitle.active{
+	 /*border-top: solid #aaa 1.5px;
+	 border-bottom: solid #fff 1.5px;*/
+	 background-color: 	#B0C4DE;/*#B0C4DE;*/
+}
+
+.docAnalysisItemTitle:hover, .tabAnalysisItemTitle:hover{
+	 background-color: 	#d1e0f0;/*#B0C4DE;*/
+}
+
+
+.docAnalysisItemTitle a, .tabAnalysisItemTitle a{
+	/*width:100%;*/
+	width:100%;
+}
+
+.docAnalysisItemContent, .tabAnalysisItemContent{
+	/*border: 1px groove #3d566e;*/
+	 border-left: inset #fff 1.5px;
+	 border-right: outset #fff 1.5px;
+	  border-bottom: outset #fff 1.5px;
+	 background-color:#fff;
+    
+	font-size:0.85rem;
+	font-weight:200;
+	font-family:Helvetica;
+}
+
+
+
+#rightSection label{
+	margin-top:auto;
+	margin-bottom:auto;
+	height:100%;
+	display: flex;
+    align-items: center;
+}
+
+
+
+#rightSection fieldset{
+	text-align: left;
+    border: 1px groove #3d566e;
+	font-size:0.85rem;
+	font-weight:200;
+	font-family:Helvetica;
+	border-color:#dcdcdc;
+}
+
+#rightSection fieldset legend{
+	padding: 0 .5rem;
+	border: 0;
+	white-space: normal;
+	width:auto;
+	font-size:0.9rem;
+	font-style:italic;
+}
+
+#rightSection fieldset label{
+	margin-top:auto;
+	margin-bottom:auto;
+	height:100%;
+	display: flex;
+    align-items: center;
+}
+
+
+#rightSection #joinTableColumnsContent, #rightSection #mainTableColumnsContent{
+	 border-top: outset #fff 1px;
+	 border-right: outset lightblue 1px;
+	 border-bottom: outset lightblue 1px;
+	  border-left: inset lightblue 1px;
+	  overflow-x:hidden;
+	  overflow-y:auto;
+	  max-height:150px;
+}

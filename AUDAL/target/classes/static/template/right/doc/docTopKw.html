@@ -1,0 +1,162 @@
+<div id="docAnalysisItem2Title" class="docAnalysisItemTitle m-0 d-flex">
+		<div class="mr-auto">
+			<a class="btn btn-sm" ng-click="setActiveDocAnalysis('docTopKw','docAnalysisItem2Title' )">
+				<i class="fas fa-sort-amount-down  mr-2"></i>Top Keywords</a>
+			</div>
+		<div class="ml-auto mr-2">
+			<i id="docAnalysisItem2ChoiceIcon" class="fas fa-star docAnalysisItemChoiceIcon" ng-show="analysis.activeDocAnalysis == 'docTopKw'"></i>
+		</div>
+	</div>
+	
+	
+	
+<div id="docAnalysisItem2Content" class="docAnalysisItemContent"  ng-show="analysis.activeDocAnalysis == 'docTopKw'">
+<form ng-controller="docTopKwController"
+		ng-submit="analysis.generalQuery()">
+		<fieldset class="m-1 px-1">
+			<legend>Parameters</legend>
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville2">Analysis</label>
+				</div>
+				<div class="col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="kwSimpleAnalysis" type="button"
+							class="kw-analysisType btn btn-sm btn-secondary active"
+							ng-click="analysis.docTopKw.activateSimpleAnalysis()">Simple</button>
+						<button id="kwAdvancedAnalysis" type="button"
+							class="kw-analysisType btn btn-sm btn-secondary"
+							ng-click="analysis.docTopKw.deactivateSimpleAnalysis()">Advanced</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0">	
+				
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Vocabulary</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docTopKw.selectedVocab = analysis.docTopKw.vocabOptions[0]"
+							ng-model="analysis.docTopKw.selectedVocab" ng-options="option.vocabulary for option in analysis.data.keyValueRepresentations"
+							ng-change="analysis.generalQuery()">
+							
+						</select>
+					</div>
+				</div>
+
+			</div>
+		<div class="row m-1 p-0" ng-show="!analysis.docTopKw.simpleAnalysis">
+			<div class="col-lg-5 m-0 p-0" >
+					<label for="ville3">Grouping</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docTopKw.selectedGrouping = groupings.listGroupings[0]"
+							ng-model="analysis.docTopKw.selectedGrouping" ng-options="option.groupingName for option in groupings.listGroupings">
+							
+						</select>
+					</div>
+				</div>
+		</div>
+
+			
+			<div class="row m-1 p-0" ng-show="analysis.docTopKw.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Terms limit</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<input type="number" min="5" max="40" class="form-control-range" id="formControlRange" required="true" 
+					ng-model="analysis.docTopKw.keywordsLimit" ng-init="analysis.docTopKw.keywordsLimit = 20">
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="analysis.docTopKw.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Terms offset</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<input type="number" min="0" max="30" class="form-control-range" id="formControlRange" required="true" 
+					ng-model="analysis.docTopKw.keywordsOffset" ng-init="analysis.docTopKw.keywordsOffset = 0">
+				</div>
+			</div>
+			
+			
+			<div class="row m-1 p-0" ng-show="!analysis.docTopKw.simpleAnalysis">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Terms List</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm"
+							ng-model="analysis.docTopKw.keywordsFilter" > 
+							<option ng-repeat="option  in terms.semanticResources" ng-if="option.resourceType=='dictionary'" value={{option.id}}>{{option.resourceName}}</option>
+							
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="row m-1 p-0">
+				<div class="col-lg-5 m-0 p-0">
+					<label for="ville3">Visualization</label>
+				</div>
+				<div class="container col-lg-7 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<select class="form-control form-control-sm" ng-init="analysis.docTopKw.selectedVisu = analysis.docTopKw.visuOptions[0]"
+							ng-model="analysis.docTopKw.selectedVisu" 
+							ng-options="option for option in analysis.docTopKw.visuOptions" ng-change="analysis.generalQuery()">
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="container d-flex justify-content-around mb-2">	
+		<input type="submit" class="btn btn-secondary submitBtn"
+			 value="Go"></input>
+			</div>
+		</fieldset>
+	</form>
+	
+	
+	
+	<div>
+		<fieldset class="m-1 px-1">
+			<legend>Results</legend>
+			
+			<div class="alert alert-warning" role="alert" ng-show="analysis.docTopKw.errorMessage">
+  				{{analysis.docTopKw.errorMessage}}
+			</div>
+			
+			<div class="d-flex justify-content-center"
+				ng-show="analysis.docTopKw.isQuerying || analysis.data.isQuerying && !analysis.docTopKw.errorMessage">
+				<div class="spinner-border" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<table class="table  table-bordered table-sm"
+				ng-show="!analysis.docTopKw.isQuerying && !analysis.data.isQuerying && !analysis.docTopKw.errorMessage">
+
+				<tbody>
+
+					<tr ng-repeat="result in analysis.docTopKw.queryResults">
+						<th scope="row">{{result.item}}</th>
+						<td>{{result.value}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+</div>

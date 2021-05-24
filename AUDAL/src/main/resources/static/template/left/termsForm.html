@@ -1,0 +1,287 @@
+<form ng-controller="termsController" ng-submit="analysis.generalQuery()">
+	
+		<fieldset class="m-1 p-1">
+		<legend>Terms</legend>
+		<div class="container p-0">
+			<div class="row mb-2">
+				<div class="col-lg-4">
+					<label for="ville3">+ matching</label>
+				</div>
+				<div class="col-lg-8">
+					<div class="container">
+						<div class="row">
+
+							<div class="input-group input-group-sm">
+								<input type="text" class="form-control" placeholder="..."
+									ng-model="terms.positiveTerm">
+								<div class="input-group-append">
+									<button type="button" class="btn btn-sm btn-secondary"
+										ng-click="terms.addPositiveTerm()">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="d-flex flex-wrap listTerms"
+								ng-repeat="term in terms.listPositiveTerms">
+								<button ng-click="terms.removePositiveTerm(term)">{{term}}</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-2">
+				<div class="col-lg-4">
+					<label for="ville3">- matching</label>
+				</div>
+				<div class="col-lg-8">
+					<div class="container">
+						<div class="row">
+
+							<div class="input-group input-group-sm">
+								<input type="text" class="form-control" placeholder="..."
+									ng-model="terms.negativeTerm">
+								<div class="input-group-append">
+									<button type="button" class="btn btn-sm btn-secondary"
+										ng-click="terms.addNegativeTerm()">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="d-flex flex-wrap listTerms">
+								<button ng-repeat="term in terms.listNegativeTerms" ng-click="terms.removeNegativeTerm(term)">{{term}}</button>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	
+	
+	
+	
+	<fieldset class="m-1 p-1">
+		<legend>Parameters</legend>
+		<div class="container">
+
+			<div class="row mb-2">
+				<div class="col-lg-4 m-0 p-0">
+					<label for="ville2">Strictness</label>
+				</div>
+				<div class="col-lg-8 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="matchingAny" type="button"
+							class="terms-matchingType btn btn-sm btn-secondary active"
+							ng-click="terms.matchingAny()">Any</button>
+						<button id="matchingAll" type="button"
+							class="terms-matchingType btn btn-sm btn-secondary"
+							ng-click="terms.matchingAll()">All</button>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row my-2">
+				<div class="col-lg-4 m-0 p-0">
+					<label for="ville3">Fuzzy search</label>
+				</div>
+				<div class="col-lg-8 m-0 p-0">
+					<div class="btn-group specialRadio" role="group">
+						<button id="fuzzySearchOn" type="button"
+							class="fuzzySearch btn btn-sm btn-secondary active"
+							ng-click="terms.fuzzySearchOn()">Yes</button>
+						<button id="fuzzySearchOff" type="button"
+							class="fuzzySearch btn btn-sm btn-secondary"
+							ng-click="terms.fuzzySearchOff()">No</button>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row my-2">
+				<div class="col-lg-4 m-0 p-0">
+					<label for="ville3">Terms extension</label>
+				</div>
+				<div class="col-lg-8 m-0 p-0">
+					<div class="input-group" role="group">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-sm btn-secondary" ng-click="terms.initMessages()"
+								data-toggle="modal" data-target="#modal1">
+								<i class="fas fa-minus"></i>
+							</button>
+						</div>
+						<select class="form-control form-control-sm" ng-model="terms.selectedSemanticResource" ng-change="terms.extendTerms()")>
+							<option value="None">None</option>
+							<option ng-repeat="item in terms.semanticResources" value="{{item.id}}">{{item.resourceName +' ['+item.resourceType+']'}}</option>
+							
+						</select>
+						<div class="input-group-append">
+							<button type="button" class="btn btn-sm btn-secondary" ng-click="terms.initMessages()"
+								data-toggle="modal" data-target="#modal2">
+								<i class="fas fa-plus"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+	
+		
+	</fieldset>
+	
+
+
+	<div class="container d-flex justify-content-around mb-2">
+
+		<input type="submit" ng-click="analysis.generalQuery()" class="btn btn-secondary submitBtn" value="Query"></input>
+
+		<input type="reset" class="btn btn-secondary submitBtn"
+			ng-click="terms.reset()" value="Reset"></input>
+
+	</div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!-- Modal 1 -->
+			<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Remove semantic resources</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      
+			      <div class="modal-body">
+			       	<table class="table table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col">Resource Name</th>
+					      <th scope="col">Resource Type</th>
+					     
+					    </tr>
+					  </thead>
+					  <tbody>
+					 
+					    <tr ng-repeat="item in terms.semanticResources">
+					  
+					      <td>{{item.resourceName}}</td>
+					      <td>{{item.resourceType}}</td>
+					      <td><button type="button" class="btn-sm m-0 btn-primary" 
+					      ng-click="terms.removeSemanticResource(item.id ,item.resourceType);">Remove</button></td>
+					    </tr>
+					    
+					  </tbody>
+					</table>
+			       
+			      </div>
+			          <div class="alert alert-warning" role="alert" ng-show="terms.errorMessage">
+  				{{terms.errorMessage}}
+				</div>
+			       <div class="alert alert-success" role="alert" ng-show="terms.okMessage">
+  				{{terms.okMessage}}
+				</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			
+			<!-- Modal 2-->
+			<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">New semantic resource</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      
+			      <div class="modal-body">
+			       
+			       	<form ng-controller="termsController" >
+						<fieldset>
+							<div class="row m-2">
+								<div class="col-lg-4 m-0 p-0">
+									<label for="ville3">Resource type</label>
+								</div>
+								<div class="col-lg-8 m-0 p-0">
+									<div class="input-group" role="group">
+										<select class="form-control form-control-sm" 
+											ng-model="terms.newSemanticResourceType" ng-init="terms.newSemanticResourceType='dictionary'">
+											<option>dictionary</option>
+											<option>thesaurus</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row m-2">
+								<div class="col-lg-4 m-0 p-0">
+									<label for="ville3">Resource name</label>
+								</div>
+								<div class="col-lg-8 m-0 p-0">
+									<div class="input-group" role="group">
+									  <input class="form-control form-control-sm" type="text" required="true" ng-model="terms.newSemanticResourceName"> 
+									  
+									</div>
+								</div>
+							</div>
+							<div class="row m-2">
+								<div class="col-lg-4 m-0 p-0">
+									<label for="ville3">File</label>
+								</div>
+								<div class="col-lg-8 m-0 p-0">
+									<div class="custom-file">
+									  <input type="file" class="custom-file-input" id="newSemanticResourceFile" required="true" >
+									  <label class="custom-file-label" for="customFile">Choose file</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						
+					</form>
+			       
+			      </div>
+			      
+			      <div class="alert alert-warning" role="alert" ng-show="terms.errorMessage">
+  				{{terms.errorMessage}}
+				</div>
+			       <div class="alert alert-success" role="alert" ng-show="terms.okMessage">
+  				{{terms.okMessage}}
+				</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			        <button type="button" class="btn btn-primary"  ng-click="terms.addSemanticResource()">Save</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>

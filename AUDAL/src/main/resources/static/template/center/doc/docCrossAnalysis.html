@@ -1,0 +1,39 @@
+<div id="docCrossAnalysisTable" ng-show="analysis.docCrossAnalysis.selectedVisu == 'Table' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying">
+
+	<table ng-table ="analysis.docCrossAnalysis.dataTable" class="table table-condensed table-bordered table-striped" show-filter="true">
+	<tr ng-repeat="item in analysis.docCrossAnalysis.tableData | orderBy:'value1'">
+	<td data-title="'#'">{{$index + 1}}</td>
+	<td data-title="analysis.docCrossAnalysis.tableTitleX" >{{item.value1}}</td>
+	<td data-title="analysis.docCrossAnalysis.tableTitleY" >{{item.value2}}</td>
+	</tr>
+	</table>
+</div>
+
+
+<div id="docCrossAnalysisHeatMapChart"   ng-show="analysis.docCrossAnalysis.selectedVisu=='HeatMap' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying"> 
+	<my-heat-map-chart title="analysis.docCrossAnalysis.chartTitle" data="analysis.docCrossAnalysis.heatMapData"></my-heat-map-chart>
+</div>
+
+<div id="docCrossAnalysisBarChart"   ng-show="analysis.docCrossAnalysis.selectedVisu=='BarChart' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying"> 
+	<my-bar-chart title="analysis.docCrossAnalysis.chartTitle" data="analysis.docCrossAnalysis.barChartData"></my-bar-chart>
+</div>
+
+<div id="docCrossAnalysisPolar"   ng-show="analysis.docCrossAnalysis.selectedVisu=='Polar' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying"> 
+	<my-polar-chart title="analysis.docCrossAnalysis.chartTitle" data="analysis.docCrossAnalysis.barChartData"></my-polar-chart>
+</div>
+
+<div id="docCrossAnalysisScatterChart"   ng-show="analysis.docCrossAnalysis.selectedVisu=='Scatter' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying"> 
+	<my-scatter-chart title="analysis.docCrossAnalysis.chartTitle" data="analysis.docCrossAnalysis.scatterChartData"></my-scatter-chart>
+</div>
+
+
+<div id="docCrossAnalysisBoxPlot"   ng-show="analysis.docCrossAnalysis.selectedVisu=='Boxplot' && !analysis.docCrossAnalysis.isQuerying && !analysis.data.isQuerying"> 
+
+	<my-multi-boxplot-chart title="analysis.docCrossAnalysis.chartTitle" data="analysis.docCrossAnalysis.boxPlotData"></my-multi-boxplot-chart>
+</div-->
+
+<div class="d-flex justify-content-center p-10" style="height:80%" ng-show="analysis.docCrossAnalysis.isQuerying || analysis.data.isQuerying">
+	<div class="spinner-grow chartSpinner" role="status" >
+		<span class="sr-only">Loading...</span>
+	</div>			
+</div>

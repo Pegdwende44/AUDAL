@@ -1,0 +1,49 @@
+ <!--SECTION TITLE-->
+ <nav class="navbar navbar-expand-md sticky-top navbar-light py-0" id="centerTitle">
+ <div class="mx-auto my-0">
+             {{analysis.data.centerSectionTitle | uppercase}}
+        </div>
+    </nav>
+    
+  
+  <!--SECTION CONTENT--> 
+<div id="centerContent">
+ 	<!-- DOCUMENTS -->
+ 
+	<div id="centerSubContent1" class="centerSubContent"  ng-include="'template/center/doc/docProperties.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docProperties' && !analysis.docProperties.errorMessage">
+	</div>
+	
+	<div id="centerSubContent2" class="centerSubContent"  ng-include="'template/center/doc/docTopKw.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docTopKw' && !analysis.docTopKw.errorMessage">
+	</div>
+	
+	<div id="centerSubContent3" class="centerSubContent"  ng-include="'template/center/doc/docHighlights.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docHighlights' && !analysis.docHighlights.errorMessage">
+	</div>
+
+	<div id="centerSubContent4" class="centerSubContent"  ng-include="'template/center/doc/docScores.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docScores' && !analysis.docScores.errorMessage">
+	</div>
+	
+	<div id="centerSubContent5" class="centerSubContent"  ng-include="'template/center/doc/docLinks.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docLinks' && !analysis.docLinks.errorMessage">
+	</div>
+	
+	<div id="centerSubContent6" class="centerSubContent"  ng-include="'template/center/doc/docCrossAnalysis.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docCrossAnalysis' && !analysis.docCrossAnalysis.errorMessage">
+	</div>
+	
+	<div id="centerSubContent11" class="centerSubContent"  ng-include="'template/center/doc/docClustering.html'" ng-show="analysis.docAnalysis && analysis.activeDocAnalysis == 'docClustering' && !analysis.docClustering.errorMessage">
+	</div>
+	
+	<!-- TABLES -->
+	
+	<div id="centerSubContent7" class="centerSubContent"  ng-include="'template/center/tab/tabProperties.html'" ng-show="!analysis.docAnalysis && analysis.activeTabAnalysis == 'tabProperties' && !analysis.tabProperties.errorMessage">
+	</div>
+	
+	<div id="centerSubContent8" class="centerSubContent"  ng-include="'template/center/tab/tabColumns.html'" ng-show="!analysis.docAnalysis && analysis.activeTabAnalysis == 'tabColumns' && !analysis.tabColumns.errorMessage">
+	</div>
+	
+	<div id="centerSubContent9" class="centerSubContent"  ng-include="'template/center/tab/tabClustering.html'" ng-show="!analysis.docAnalysis && analysis.activeTabAnalysis == 'tabClustering' && !analysis.tabClustering.errorMessage">
+	</div>
+	
+	<div id="centerSubContent10" class="centerSubContent"  ng-include="'template/center/tab/tabQueries.html'" ng-show="!analysis.docAnalysis && analysis.activeTabAnalysis == 'tabQueries' && !analysis.tabQueries.errorMessage">
+	</div>
+
+</div>
+    
